@@ -54,7 +54,7 @@ def convert(text_info):
 
     for t in text_info:
         if t[0] == 'EOS':
-            raise StopIteration
+            break
 
         if others.match(t[1]):
             yield t[0]
