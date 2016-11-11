@@ -47,7 +47,7 @@ def tweet(tweet_str):
 
 
 def convert(text_info):
-    others = re.compile("^(助.?|副|記号)")
+    others = re.compile("^(助.?|副|感動|記号)")
     noun = re.compile("^名詞")
     adj = re.compile("^形容詞")
     verb = re.compile("^動詞")
