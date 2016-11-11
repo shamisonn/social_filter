@@ -23,9 +23,9 @@ tw = Twitter(
     )    
 )
 
-def yes_no_input():
+def yes_no_input(msg):
     while True:
-        choice = input("'yes' or 'no' [y/N]: ").lower()
+        choice = input(msg + " [y/N]: ").lower()
         if choice in ['y', 'ye', 'yes']:
             return True
         elif choice in ['n', 'no']:
@@ -35,7 +35,7 @@ def yes_no_input():
 def tweet(tweet_str):
     tw_str = social_filter(tweet_str)[0:120]
     print('TEXT: ' + tw_str)
-    if yes_no_input():
+    if yes_no_input("Are you sure to tweet this?"):
         tw.statuses.update(status= tw_str+ ' #social_filter')
 
                                     
@@ -63,4 +63,14 @@ def social_filter(input_str):
     return ''.join(text)
 
     
-tweet(sys.argv[1])
+def interactive():
+    while yes_no_input("Would you like to tweet?"):
+        raw_tweet = input("tweet > ")
+        tweet(raw_tweet)
+
+
+if __name__ == '__main__':
+    if len(sys.argv) > 1:
+        tweet(sys.argv[1])
+    else:
+        interactive()
