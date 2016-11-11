@@ -63,4 +63,5 @@ def social_filter(input_str):
     return ''.join(text)
 
     
-tweet(sys.argv[1])
+if __name__ == '__main__':
+    tweet(sys.argv[1])
