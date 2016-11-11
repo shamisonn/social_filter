@@ -13,6 +13,7 @@ import MeCab
 config = configparser.ConfigParser()
 config.read(os.path.join(os.path.dirname(__file__), 'config.ini'))
 oauth_config = config['oauth']
+words_config = config['words']
 
 # ツイートやらプロフィールを取ってくるため作成
 tw = Twitter(
@@ -58,11 +59,11 @@ def convert(text_info):
         if others.match(t[1]):
             yield t[0]
         elif noun.match(t[1]):
-            yield "にゃん"
+            yield words_config['noun']
         elif adj.match(t[1]):
-            yield "にゃ"
+            yield words_config['adjective']
         elif verb.match(t[1]):
-            yield "にゃーん"
+            yield words_config['verb']
         else:
             yield t
 
@@ -70,7 +71,7 @@ def convert(text_info):
 def social_filter(input_str):
     mt = MeCab.Tagger('mecabrc')
     text_info = map(lambda t: t.split("\t"),
-            mt.parse(input_str).split("\n"))
+            mt.parse(input_str).split("\n"))    
     return ''.join(convert(text_info))
 
 if __name__ == '__main__':
