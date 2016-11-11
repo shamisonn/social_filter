@@ -24,6 +24,7 @@ tw = Twitter(
     )    
 )
 
+
 def yes_no_input():
     yes = re.compile("^y(e|es)?$", flags=re.IGNORECASE)
     no = re.compile("^(no?)?$", flags=re.IGNORECASE)
@@ -38,34 +39,37 @@ def yes_no_input():
 
 
 def tweet(tweet_str):
-    tw_str = social_filter(tweet_str)[0:120]
-    print('TEXT: ' + tw_str)
+    tw_str = social_filter(tweet_str)[:120]
+    print('TEXT:', tw_str)
     if yes_no_input():
-        tw.statuses.update(status= tw_str+ ' #social_filter')
+        tw.statuses.update(status=tw_str+' #social_filter')
 
-                                    
-def social_filter(input_str):
-    mt = MeCab.Tagger('mecabrc')
-    texts_info = list(map(lambda t: t.split("\t"),
-                     mt.parse(input_str).split("\n")))
-    text = []
-    for t in texts_info:
+
+def convert(text_info):
+    for t in text_info:
         if t[0] == 'EOS':
-            break
+            raise StopIteration
+
         if t[1].startswith('助詞') or \
            t[1].startswith('助動詞') or \
            t[1].startswith('記号') or \
            t[1].startswith('副詞'):
-            text.append(t[0])
+               yield t[0]
         elif t[1].startswith('名詞'):
-            text.append("にゃん")
+            yield "にゃん"
         elif t[1].startswith('形容詞'):
-            text.append("にゃ")
+            yield "にゃ"
         elif t[1].startswith('動詞'):
-            text.append("にゃーん")
+            yield "にゃーん"
         else:
-            text.append(t)        
-    return ''.join(text)
+            yield t
 
-    
+
+def social_filter(input_str):
+    mt = MeCab.Tagger('mecabrc')
+    text_info = map(lambda t: t.split("\t"),
+                     mt.parse(input_str).split("\n"))
+    return ''.join(convert(text_info))
+
+
 tweet(sys.argv[1])
