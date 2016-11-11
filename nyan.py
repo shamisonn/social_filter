@@ -5,6 +5,7 @@ from twitter import *
 import configparser
 import os
 import sys
+import re
 
 import MeCab
 
@@ -24,12 +25,16 @@ tw = Twitter(
 )
 
 def yes_no_input():
+    yes = re.compile("^y(e|es)?$", flags=re.IGNORECASE)
+    no = re.compile("^(no?)?$", flags=re.IGNORECASE)
+
     while True:
-        choice = input("'yes' or 'no' [y/N]: ").lower()
-        if choice in ['y', 'ye', 'yes']:
+        choice = input("are you sure to tweet this? [y/N]: ")
+        if yes.match(choice):
             return True
-        elif choice in ['n', 'no']:
+        elif no.match(choice):
             return False
+        print("couldn't understand: %s" % choice)
 
 
 def tweet(tweet_str):
