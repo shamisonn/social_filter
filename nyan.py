@@ -47,7 +47,6 @@ def tweet(tweet_str):
 
 
 def convert(text_info):
-    others = re.compile("^(助.?|副|感動|記号)")
     noun = re.compile("^名詞")
     adj = re.compile("^形容詞")
     verb = re.compile("^動詞")
@@ -56,16 +55,14 @@ def convert(text_info):
         if t[0] == 'EOS':
             break
 
-        if others.match(t[1]):
-            yield t[0]
-        elif noun.match(t[1]):
+        if noun.match(t[1]):
             yield words_config['noun']
         elif adj.match(t[1]):
             yield words_config['adjective']
         elif verb.match(t[1]):
             yield words_config['verb']
         else:
-            yield t
+            yield t[0]
 
 
 def social_filter(input_str):
