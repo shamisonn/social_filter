@@ -1,0 +1,11 @@
+box: ton7i9i/mecab-python3
+build:
+  steps:
+    # A step that executes `pip install` command.
+    - pip-install:
+      packages_list: "nose"
+
+    - script:
+      name: execute python test
+      code: |
+        nosetests
