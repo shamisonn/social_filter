@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-__author__ = 'shamison'
+__author__ = 'shamison, matsub'
 
 import configparser
 import os
