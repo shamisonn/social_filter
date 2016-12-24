@@ -1,5 +1,7 @@
 # social_filter
 
+[![wercker status](https://app.wercker.com/status/7749870bec9e065bade5b1e4610aca10/s/master "wercker status")](https://app.wercker.com/project/byKey/7749870bec9e065bade5b1e4610aca10)
+
 ## NEED
 
 - MeCab(もろもろ)
