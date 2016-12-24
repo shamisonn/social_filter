@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 __author__ = 'shamison'
 
@@ -68,7 +69,7 @@ def convert(text_info):
 def social_filter(input_str):
     mt = MeCab.Tagger('mecabrc')
     text_info = map(lambda t: t.split("\t"),
-            mt.parse(input_str).split("\n"))    
+                    mt.parse(input_str).split("\n"))    
     return ''.join(convert(text_info))
 
 
