@@ -35,7 +35,8 @@ def yes_no_input(msg):
             return True
         elif no.match(choice):
             return False
-        print("couldn't understand: %s" % choice)
+        else:
+            print("couldn't understand: %s" % choice)
 
 
 def tweet(tweet_str):
