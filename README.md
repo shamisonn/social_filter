@@ -35,10 +35,8 @@ make install
 
 # Usage
 
-1. config.iniに鍵を書き込む
-2. ↓
+1. Type your twitter's API keys on config.ini .
+2. run .
 
-![howtouse](howtouse.png "にゃーん")
+![usage.png](usage.png "にゃーん")
 
-
-適当にツイートされるはず。
