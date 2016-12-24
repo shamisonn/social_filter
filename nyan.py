@@ -2,12 +2,12 @@
 # -*- coding: utf-8 -*-
 __author__ = 'shamison'
 
-from twitter import *
 import configparser
 import os
 import sys
 import re
 
+import twitter
 import MeCab
 
 # config.iniから読み込み. consumer_keyとかを諸々書いておく
@@ -17,13 +17,11 @@ oauth_config = config['oauth']
 words_config = config['words']
 
 # ツイートやらプロフィールを取ってくるため作成
-tw = Twitter(
-    auth=OAuth(
-        oauth_config['token'],
-        oauth_config['token_secret'],
-        oauth_config['consumer'],
-        oauth_config['consumer_secret']
-    )    
+tw = twitter.Api(
+    consumer_key=oauth_config['consumer'],
+    consumer_secret=oauth_config['consumer_secret'],
+    access_token_key=oauth_config['token'],
+    access_token_secret=oauth_config['token_secret']
 )
 
 
@@ -44,7 +42,7 @@ def tweet(tweet_str):
     tw_str = social_filter(tweet_str)[:120]
     print('TEXT:', tw_str)
     if yes_no_input("Are you sure to tweet this?"):
-        tw.statuses.update(status=tw_str+' #social_filter')
+        tw.PostUpdate(status=tw_str+' #social_filter')
 
 
 def convert(text_info):
