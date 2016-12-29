@@ -73,6 +73,7 @@ def social_filter(input_str):
 
 
 def interactive():
+    print("-- interactive mode --")
     while yes_no_input("Would you like to tweet?"):
         raw_tweet = input("tweet > ")
         tweet(raw_tweet)
