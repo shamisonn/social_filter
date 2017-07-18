@@ -7,8 +7,11 @@ import os
 import sys
 import re
 
-import twitter
 import MeCab
+
+from twitter import *
+from twitter.stream import TwitterStream
+from twitter.oauth import OAuth
 
 # config.iniから読み込み. consumer_keyとかを諸々書いておく
 config = configparser.ConfigParser()
@@ -17,13 +20,11 @@ oauth_config = config['oauth']
 words_config = config['words']
 
 # ツイートやらプロフィールを取ってくるため作成
-tw = twitter.Api(
+tw = Twitter(auth = OAuth(
+    token=oauth_config['token'],
+    token_secret=oauth_config['token_secret'],
     consumer_key=oauth_config['consumer'],
-    consumer_secret=oauth_config['consumer_secret'],
-    access_token_key=oauth_config['token'],
-    access_token_secret=oauth_config['token_secret']
-)
-
+    consumer_secret=oauth_config['consumer_secret']))
 
 def yes_no_input(msg):
     yes = re.compile("^y(e|es)?$", flags=re.IGNORECASE)
