@@ -9,8 +9,8 @@ import re
 
 import MeCab
 
+
 from twitter import *
-from twitter.stream import TwitterStream
 from twitter.oauth import OAuth
 
 # config.iniから読み込み. consumer_keyとかを諸々書いておく
@@ -44,7 +44,8 @@ def tweet(tweet_str):
     tw_str = social_filter(tweet_str)[:120]
     print('TEXT:', tw_str)
     if yes_no_input("Are you sure to tweet this?"):
-        tw.PostUpdate(status=tw_str+' #social_filter')
+        tw.statuses.update(status=tw_str+' #social_filter')
+#        tw.PostUpdate(status=tw_str+' #social_filter')
 
 
 def convert(text_info):
