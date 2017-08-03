@@ -9,9 +9,7 @@ import re
 
 import MeCab
 
-
-from twitter import *
-from twitter.oauth import OAuth
+import twitter
 
 # config.iniから読み込み. consumer_keyとかを諸々書いておく
 config = configparser.ConfigParser()
@@ -20,16 +18,17 @@ oauth_config = config['oauth']
 words_config = config['words']
 
 # ツイートやらプロフィールを取ってくるため作成
-tw = Twitter(auth = OAuth(
-    token=oauth_config['token'],
-    token_secret=oauth_config['token_secret'],
+tw = twitter.Api(
     consumer_key=oauth_config['consumer'],
-    consumer_secret=oauth_config['consumer_secret']))
+    consumer_secret=oauth_config['consumer_secret'],
+    access_token_key=oauth_config['token'],
+    access_token_secret=oauth_config['token_secret'])
+
 
 def yes_no_input(msg):
     yes = re.compile("^y(e|es)?$", flags=re.IGNORECASE)
     no = re.compile("^(no?)?$", flags=re.IGNORECASE)
-
+    
     while True:
         choice = input(msg + " [y/N]: ")
         if yes.match(choice):
@@ -44,8 +43,7 @@ def tweet(tweet_str):
     tw_str = social_filter(tweet_str)[:120]
     print('TEXT:', tw_str)
     if yes_no_input("Are you sure to tweet this?"):
-        tw.statuses.update(status=tw_str+' #social_filter')
-#        tw.PostUpdate(status=tw_str+' #social_filter')
+        tw.PostUpdate(tw_str+' #social_filter')
 
 
 def convert(text_info):
